@@ -21,8 +21,7 @@ def gold_home(request):
     return render(request, 'gold/index.html', context)
 
 def reset(request):
-    if request.method == 'POST':
-        request.session.flush()
+    request.session.flush()
     return redirect('/')
 
 def process_gold(request):
@@ -35,13 +34,13 @@ def process_gold(request):
         building_name_upper = location[0].upper() + location[1:]  # Capitalize the building name for the text string
         gold_prize = random.randrange(building[0], building[1]) # Make the gold prize!
         now_formatted = datetime.now().strftime("%m/%d/%Y %I:%M%p") # Date/Time string for the text string
-        result = 'earn' # CSS message color class!
+        result = 'success' # CSS message color class!
         message = f"Earned {gold_prize} gold from the {building_name_upper}! ({now_formatted})" 
         if location == "casino":
             win_or_lose = round(random.random())
             if win_or_lose == 0:
                 message = f"Entered a Casino and lost {gold_prize} gold... Ouch... ({now_formatted})"
-                result = 'lose'
+                result = 'danger'
                 gold_prize = gold_prize * -1
         request.session['gold'] += gold_prize
         request.session['activities'].append({"message": message, "result": result})

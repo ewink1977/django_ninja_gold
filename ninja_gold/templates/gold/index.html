@@ -1,36 +1,48 @@
 {% extends "gold/template.html" %}
     {% block content %}
-    <h1>Gold : {{ request.session.gold }}</h1>
-    <form action="process_gold" method="POST">
-        {% csrf_token %}
-        <h2>Farm</h2>
-        <input type="hidden" id="gold_location" name="gold_location" value="farm">
-        <button type="submit">Find Gold!</button>
-    </form>
-    <form action="process_gold" method="POST">
-        {% csrf_token %}
-        <h2>Cave</h2>
-        <input type="hidden" id="gold_location" name="gold_location" value="cave">
-        <button type="submit">Find Gold!</button>
-    </form>
-    <form action="process_gold" method="POST">
-        {% csrf_token %}
-        <h2>House</h2>
-        <input type="hidden" id="gold_location" name="gold_location" value="house">
-        <button type="submit">Find Gold!</button>
-    </form>
-    <form action="process_gold" method="POST">
-        {% csrf_token %}
-        <h2>Casino</h2>
-        <input type="hidden" id="gold_location" name="gold_location" value="casino">
-        <button type="submit">Find Gold!</button>
-    </form>
+    <header class="d-flex justify-content-center align-items-center">
+        <h1>Ninja Gold!</h1>
+        <a href="reset"><button>START OVER</button></a>
+    </header>
+
+    <h3 class="local-pad">Your Gold: <input type="text" disabled value="{{ request.session.gold }}"></h3>
+
+    <div class="d-flex justify-content-center">
+        <div class="d-flex justify-content-center align-items-center col-3 border border-secondary rounded-lg shadow local-pad">
+            <form action="process_gold" method="POST">
+                {% csrf_token %}
+                <h2>Farm</h2>
+                <input type="hidden" name="gold_location" value="farm">
+                <button type="submit">Find Gold!</button>
+            </form>
+        </div>
+        <div class="d-flex justify-content-center align-items-center col-3 border border-secondary rounded-lg shadow local-pad">
+            <form action="process_gold" method="POST">
+                {% csrf_token %}
+                <h2>Cave</h2>
+                <input type="hidden" name="gold_location" value="cave">
+                <button type="submit">Find Gold!</button>
+            </form>
+        </div>
+        <div class="d-flex justify-content-center align-items-center col-3 border border-secondary rounded-lg shadow local-pad">
+            <form action="process_gold" method="POST">
+                {% csrf_token %}
+                <h2>House</h2>
+                <input type="hidden" name="gold_location" value="house">
+                <button type="submit">Find Gold!</button>
+            </form>
+        </div>
+        <div class="d-flex justify-content-center align-items-center col-3 border border-secondary rounded-lg shadow local-pad">
+            <form action="process_gold" method="POST">
+                {% csrf_token %}
+                <h2>Casino</h2>
+                <input type="hidden" name="gold_location" value="casino">
+                <button type="submit">Find Gold!</button>
+            </form>
+        </div>
+    </div>
     <br>
-    <form action="reset" method="POST">
-        {% csrf_token %}
-        <button type="submit">START OVER</button>
-    </form>
     {% for activity in request.session.activities reversed %}
-    <p class="{{ activity.result }}">{{ activity.message }}</p>
+    <p class="text-{{ activity.result }} activity-font">{{ activity.message }}</p>
     {% endfor %}
     {% endblock content %}
