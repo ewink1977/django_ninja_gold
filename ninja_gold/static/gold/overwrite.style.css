@@ -6,6 +6,11 @@ h1 {
     padding: 15px;
 }
 
+.local-center {
+    text-align: center;
+    margin: 0 auto;
+}
+
 .activity-font {
     font-family: 'Special Elite', cursive;
     font-size: 0.8em;

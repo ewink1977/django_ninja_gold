@@ -26,7 +26,21 @@ def reset(request):
 
 def process_gold(request):
     if request.method == 'GET':
-        print('INVALID, CHEATER CHEATER PUMPKIN EATER')
+        location = request.GET.get('location')
+        building = gold_map[location] # Access the correct values...
+        building_name_upper = location[0].upper() + location[1:]  # Capitalize the building name for the text string
+        gold_prize = random.randrange(building[0], building[1]) # Make the gold prize!
+        now_formatted = datetime.now().strftime("%m/%d/%Y %I:%M%p") # Date/Time string for the text string
+        result = 'success' # CSS message color class!
+        message = f"Earned {gold_prize} gold from the {building_name_upper}! ({now_formatted})" 
+        if location == "casino":
+            win_or_lose = round(random.random())
+            if win_or_lose == 0:
+                message = f"Entered a Casino and lost {gold_prize} gold... Ouch... ({now_formatted})"
+                result = 'danger'
+                gold_prize = gold_prize * -1
+        request.session['gold'] += gold_prize
+        request.session['activities'].append({"message": message, "result": result})
         return redirect('/')
     if request.method == 'POST':
         location = request.POST["gold_location"]
@@ -44,7 +58,8 @@ def process_gold(request):
                 gold_prize = gold_prize * -1
         request.session['gold'] += gold_prize
         request.session['activities'].append({"message": message, "result": result})
-    return redirect('/')
+        return redirect('/')
+
 
 
 

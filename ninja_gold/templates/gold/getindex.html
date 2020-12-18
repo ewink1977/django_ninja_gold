@@ -1,0 +1,36 @@
+{% extends "gold/template.html" %}
+    {% block content %}
+    <header class="d-flex justify-content-center align-items-center">
+        <h1>Ninja Gold!</h1>
+        <a href="reset"><button>START OVER</button></a>
+    </header>
+
+    <h3 class="local-pad">Your Gold: <input type="text" disabled value="{{ request.session.gold }}"></h3>
+
+    <div class="d-flex justify-content-center">
+        <div class="col-3 border border-secondary rounded-lg shadow local-pad local-center">
+                <h2>Farm</h2>
+                <a href="process_gold?location=farm"><button>Find Gold!</button></a>
+            </form>
+        </div>
+        <div class="col-3 border border-secondary rounded-lg shadow local-pad local-center">
+                <h2>Cave</h2>
+                <a href="process_gold?location=cave"><button>Find Gold!</button></a>
+            </form>
+        </div>
+        <div class="col-3 border border-secondary rounded-lg shadow local-pad local-center">
+                <h2>House</h2>
+                <a href="process_gold?location=house"><button>Find Gold!</button></a>
+            </form>
+        </div>
+        <div class="col-3 border border-secondary rounded-lg shadow local-pad local-center">
+                <h2>Casino</h2>
+                <a href="process_gold?location=casino"><button>Find Gold!</button></a>
+            </form>
+        </div>
+    </div>
+    <br>
+    {% for activity in request.session.activities reversed %}
+    <p class="text-{{ activity.result }} activity-font">{{ activity.message }}</p>
+    {% endfor %}
+    {% endblock content %}
